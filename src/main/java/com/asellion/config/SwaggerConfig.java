@@ -29,10 +29,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("ABC Bank Customer Statement Processor")
+                .title("ABC Bank Customer Statement Validator")
                 .description("ABC Bank receives monthly deliveries of customer statement records. This information is delivered in two formats, CSV and XML. These records need to be validated.")
                 .termsOfServiceUrl("These project contains only MT940 Validator services")
-                .license("Copyright ©  Cathay Pacific Airways Limited")
+                .license("Copyright ©  Urvin Shah")
                 .build();
     }
 }
