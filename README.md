@@ -25,7 +25,7 @@ There are two validations:
   - JDK 1.8
 
 # Installation
-- Download executable jar FileValidation-0.0.1-SNAPSHOT.jar file from the executable folder.
+- Download executable jar FileValidation-1.0.RELEASE.jar file from the executable folder.
 - Execute below commands in the command prompt
     ```cmd  
       cd <TARGET_FOLDER>
