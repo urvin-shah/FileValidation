@@ -4,9 +4,11 @@ import com.asellion.domain.InvalidRecord;
 import com.asellion.domain.MT940Record;
 import com.asellion.helper.FileReader;
 import com.asellion.helper.FileReaderFactory;
+import com.asellion.repository.InvalidRecordRepository;
 import com.asellion.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +33,9 @@ public class MT940FileValidatorService {
     static final String NEGATIVE_END_BALANCE_REASON = "End Balance is %f, Negative balance is not allowed.";
     static final String UNMATCHED_END_BALANCE_REASON = "End Balance is %f, but it should be %f.";
 
+    @Autowired
+    InvalidRecordRepository invalidRecordRepository;
+
     /**
      * validateMT940File service will validate the Simplified MT940 file. File format can be .csv or .xml
      * @param file
@@ -49,7 +54,10 @@ public class MT940FileValidatorService {
         }).filter(rec->rec != null)
                 .collect(Collectors.toList());
         lstInvalidRecords.stream().forEach(invalidRecord -> {
-            logger.info("Reference no:"+invalidRecord.getTxnReferenceNo()+" is invalild, Failure Reason :"+invalidRecord.getFailureReason());
+            com.asellion.entity.InvalidRecord ivRecord = new com.asellion.entity.InvalidRecord();
+            ivRecord.setReferenceNumber(invalidRecord.getTxnReferenceNo());
+            ivRecord.setFailureReason(invalidRecord.getFailureReason());
+            invalidRecordRepository.save(ivRecord);
         });
 
         return lstInvalidRecords;
