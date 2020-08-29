@@ -1,0 +1,56 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <style>
+        h1{
+            font-size:2em;
+            margin:.67em 0;
+         }
+
+
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+
+</head>
+<title>ABC Bank Customer Statement Validator</title>
+<body>
+<div align="center"><h1>ABC Bank Customer Statement Validator</h1></div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/">
+        <table>
+            <tr><td>Upload Simplified MT940 File:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+
+<div th:if="${invalidRecords}">
+    <table>
+        <tr>
+            <th>Reference No.</th>
+            <th>Failure Reason</th>
+        </tr>
+        <tr th:each="invalidRecord : ${invalidRecords}">
+            <td th:text="${invalidRecord.txnReferenceNo}"></td>
+            <td th:text = "${invalidRecord.failureReason}"></td>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>
